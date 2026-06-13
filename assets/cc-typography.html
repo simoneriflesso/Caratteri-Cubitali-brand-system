@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipografia Caroselli — Caratteri Cubitali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Archivo:wght@600&family=Martian+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS — Caratteri Cubitali
+   ═══════════════════════════════════════ */
+:root {
+  --cc-nero:    #0D0D0D;
+  --cc-bianco:  #F3F3F3;
+  --cc-blu:     #434CE0;
+  --cc-giallo:  #FED74E;
+  --cc-rosso:   #F24E29;
+  --cc-verde:   #04BF68;
+  --cc-blu-50:  #ECEEFF;
+  --cc-blu-100: #D4D8FF;
+  --cc-blu-800: #141B82;
+
+  /* Font */
+  --font-mono:   'Martian Mono', monospace;
+  --font-body:   'Atkinson Hyperlegible', sans-serif;
+  --font-label:  'Archivo', sans-serif;   /* Archivo Semibold per label sezione */
+
+  --lh: 1.2; /* interlinea universale */
+
+  /* Scala px — calibrata per slide preview 380×475px (~35% di 1080×1350px).
+     In Canva moltiplicare per ~2.85. */
+  --t-headline: 26px;
+  --t-body-l:   15px;
+  --t-body-m:   13px;
+  --t-label:    11px;   /* aumentato rispetto alla versione precedente */
+  --t-handle:   10px;
+  --t-stat:     58px;
+
+  --slide-w: 380px;
+  --slide-h: 475px;
+  --slide-pad: 28px 32px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: #e0e0e0; color: var(--cc-nero); line-height: var(--lh); }
+
+/* ─── PAGE HEADER ────────────────────── */
+.site-header { background: var(--cc-nero); padding: 40px 40px 32px; border-bottom: 3px solid var(--cc-blu); }
+.eyebrow { font-family: var(--font-body); font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--cc-blu-100); margin-bottom: 12px; }
+.site-header h1 { font-family: var(--font-mono); font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; line-height: var(--lh); color: var(--cc-bianco); letter-spacing: -.02em; }
+.site-header h1 span { color: var(--cc-giallo); display: block; }
+.site-header .sub { font-size: .9rem; color: var(--cc-bianco); opacity: .65; margin-top: 12px; max-width: 620px; line-height: var(--lh); }
+
+/* ─── TABS ───────────────────────────── */
+.tabs { display: flex; border-bottom: 2px solid var(--cc-nero); background: var(--cc-bianco); overflow-x: auto; }
+.tab-btn { font-family: var(--font-body); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 12px 22px; border: none; border-right: 1px solid #ddd; background: transparent; cursor: pointer; color: #888; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .12s; }
+.tab-btn:hover  { color: var(--cc-nero); background: var(--cc-blu-50); }
+.tab-btn.active { color: var(--cc-nero); border-bottom-color: var(--cc-blu); background: white; }
+.section { display: none; padding: 40px; max-width: 1400px; margin: 0 auto; }
+.section.active { display: block; }
+
+/* ─── SECTION LABELS (page UI) ──────── */
+.sec-label { font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #999; margin-bottom: 10px; margin-top: 40px; }
+.sec-label:first-child { margin-top: 0; }
+.sec-title { font-family: var(--font-mono); font-size: clamp(1.4rem,3vw,2.2rem); font-weight: 700; color: var(--cc-nero); margin-bottom: 8px; line-height: var(--lh); }
+.sec-desc { font-size: .9rem; opacity: .65; max-width: 600px; margin-bottom: 32px; line-height: var(--lh); }
+
+/* ─── SPEC TABLE ─────────────────────── */
+.spec-table { border: 2px solid #e0e0e0; border-radius: 6px; overflow: hidden; margin-bottom: 40px; }
+.spec-table table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+.spec-table thead tr { background: var(--cc-nero); }
+.spec-table thead th { padding: 9px 12px; text-align: left; font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cc-bianco); border-right: 1px solid #333; }
+.spec-table thead th:last-child { border-right: none; }
+.spec-table tbody tr { border-bottom: 1px solid #eee; }
+.spec-table tbody tr:last-child { border-bottom: none; }
+.spec-table tbody tr:nth-child(even) { background: rgba(0,0,0,.02); }
+.spec-table tbody td { padding: 9px 12px; border-right: 1px solid #eee; vertical-align: top; line-height: 1.4; }
+.spec-table tbody td:last-child { border-right: none; }
+.spec-table tbody td:first-child { font-family: var(--font-mono); font-size: .72rem; color: var(--cc-blu); font-weight: 600; }
+.badge { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 7px; border-radius: 3px; display: inline-block; }
+
+/* ═══════════════════════════════════════
+   COMPONENTI SLIDE
+   ═══════════════════════════════════════ */
+
+/* SLIDE CONTAINER */
+.carousel-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; align-items: flex-start; }
+.slide-wrap { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+.slide-outer-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #999; }
+.slide { width: var(--slide-w); height: var(--slide-h); overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: var(--slide-pad); flex-shrink: 0; }
+.slide-foot { display: flex; justify-content: space-between; align-items: flex-end; }
+.arrow { width: 36px; height: 36px; border: 2px solid currentColor; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+
+/* ──────────────────────────────────────
+   LABEL SEZIONE — neo-brutalist flat shadow
+   Regole definitive:
+   · Font: Archivo Semibold (600), uppercase
+   · Size: 11px
+   · Letter-spacing: 1.5px
+   · Padding: 4px 10px (meno rispetto a LEDHA)
+   · Border: 1.5px solid (stesso colore del testo)
+   · Border-radius: 999px (pillola)
+   · Background: transparent
+   · Box-shadow: 0 2px 0 [colore pieno 100%]
+     → solo asse verticale (X=0), opacità SEMPRE 100%
+   · Colori ammessi: Nero, Bianco, Blu, Giallo
+     (NO Rosso, NO Verde — contrasto insufficiente)
+   ────────────────────────────────────── */
+.label-sezione {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-label);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border: 1.5px solid var(--cc-nero);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cc-nero);
+  box-shadow: 0 2px 0 var(--cc-nero);   /* X=0 sempre, opacità 100% sempre */
+  margin-bottom: 14px;
+}
+/* Variante su sfondo scuro: testo e bordo bianchi, ombra bianca piena */
+.label-sezione.white {
+  color: var(--cc-bianco);
+  border-color: var(--cc-bianco);
+  box-shadow: 0 2px 0 var(--cc-bianco);
+}
+/* Variante Giallo: su sfondi dove il giallo è leggibile */
+.label-sezione.giallo {
+  color: var(--cc-giallo);
+  border-color: var(--cc-giallo);
+  box-shadow: 0 2px 0 var(--cc-giallo);
+}
+/* Variante Blu: su sfondi bianchi/pastello */
+.label-sezione.blu {
+  color: var(--cc-blu);
+  border-color: var(--cc-blu);
+  box-shadow: 0 2px 0 var(--cc-blu);
+}
+
+/* ──────────────────────────────────────
+   HEADLINE con fondino (Martian Mono)
+   · Sentence case (NON uppercase)
+   · box-decoration-break: clone → ogni riga ha il proprio fondino
+   · Combinazioni ammesse:
+     C1  fondino Nero   · testo Bianco
+     C2  fondino Giallo · testo Nero
+     C3  fondino Blu    · testo Bianco
+     C4  fondino Rosso  · testo Nero  (solo urgenza/errore)
+     C5  fondino Verde  · testo Nero  (solo successo)
+   · REGOLA: headline e sfondo slide non usano mai
+     lo stesso colore (no giallo su giallo, no blu su blu ecc.)
+   ────────────────────────────────────── */
+.headline { font-family: var(--font-mono); font-weight: 700; font-size: var(--t-headline); line-height: var(--lh); letter-spacing: -.01em; }
+.headline span { padding: .08em .22em .12em .22em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-bianco-nero span  { background: var(--cc-nero);   color: var(--cc-bianco); }
+.hl-nero-giallo span  { background: var(--cc-giallo);  color: var(--cc-nero);   }
+.hl-bianco-blu span   { background: var(--cc-blu);     color: var(--cc-bianco); }
+.hl-nero-rosso span   { background: var(--cc-rosso);   color: var(--cc-nero);   }
+.hl-nero-verde span   { background: var(--cc-verde);   color: var(--cc-nero);   }
+
+/* Headline senza fondino */
+.headline-free { font-family: var(--font-mono); font-weight: 700; font-size: var(--t-headline); line-height: var(--lh); letter-spacing: -.01em; }
+
+/* ── CORPO TESTO (Atkinson) ─────────── */
+.body-text { font-family: var(--font-body); font-weight: 400; font-size: var(--t-body-l); line-height: var(--lh); }
+.body-text.sm { font-size: var(--t-body-m); }
+.body-text strong { font-weight: 700; }
+
+/* ── STATISTICA ──────────────────────── */
+/* Numero e unità: stesso colore, applicato tramite classe sul .stat-wrap */
+.stat-wrap { display: flex; align-items: baseline; gap: .04em; }
+.stat-number { font-family: var(--font-mono); font-weight: 700; font-size: var(--t-stat); line-height: 1; letter-spacing: -.03em; }
+.stat-unit   { font-family: var(--font-mono); font-weight: 700; font-size: calc(var(--t-stat) * .58); line-height: 1; }
+.stat-wrap.c-bianco .stat-number, .stat-wrap.c-bianco .stat-unit { color: var(--cc-bianco); }
+.stat-wrap.c-giallo .stat-number, .stat-wrap.c-giallo .stat-unit { color: var(--cc-giallo); }
+.stat-wrap.c-blu    .stat-number, .stat-wrap.c-blu    .stat-unit { color: var(--cc-blu);    }
+.stat-wrap.c-nero   .stat-number, .stat-wrap.c-nero   .stat-unit { color: var(--cc-nero);   }
+.stat-label { font-family: var(--font-body); font-weight: 700; font-size: var(--t-body-l); line-height: var(--lh); margin-top: 10px; }
+
+/* ── HANDLE / FONTE ──────────────────── */
+.handle { font-family: var(--font-mono); font-size: var(--t-handle); font-weight: 400; letter-spacing: .04em; opacity: .5; }
+
+/* ── COMBO CARD (tab headline) ──────── */
+.combo-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 18px; margin-bottom: 40px; }
+.combo-card { border: 1.5px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
+.combo-preview { padding: 22px 22px 18px; min-height: 100px; display: flex; align-items: center; }
+.combo-meta { padding: 10px 14px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.combo-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; opacity: .5; display: block; margin-bottom: 2px; }
+.combo-hex { font-family: monospace; font-size: 10px; }
+.combo-ratio { font-size: 12px; font-weight: 700; }
+.combo-note { padding: 7px 14px 9px; font-size: 11px; opacity: .6; border-top: 1px solid #f0f0f0; background: #fafafa; }
+
+/* ── RULES GRID ──────────────────────── */
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(255px,1fr)); gap: 12px; margin-bottom: 36px; }
+.rule-card { border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 16px; }
+.rule-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--cc-blu); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+.rule-card p { font-size: 12px; line-height: 1.5; opacity: .8; }
+
+footer { background: var(--cc-nero); color: var(--cc-bianco); text-align: center; padding: 20px; font-family: var(--font-body); font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; opacity: .85; margin-top: 64px; }
+:focus-visible { outline: 3px solid var(--cc-blu); outline-offset: 2px; }
+@media (max-width: 860px) { .section { padding: 24px 16px; } :root { --slide-w: 300px; --slide-h: 375px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <p class="eyebrow">Caratteri Cubitali — Design System v1.0</p>
+  <h1>Tipografia<span>Caroselli Social</span></h1>
+  <p class="sub">Martian Mono per headline (con e senza fondino) · Atkinson Hyperlegible per corpo testo · Archivo Semibold per label sezione. Interlinea 1.2 universale. Formato slide 4:5 (1080×1350px).</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab-btn active" onclick="showTab('specifiche')" role="tab">Specifiche</button>
+  <button class="tab-btn"        onclick="showTab('headline')"   role="tab">Headline &amp; fondino</button>
+  <button class="tab-btn"        onclick="showTab('template')"   role="tab">Template slide</button>
+  <button class="tab-btn"        onclick="showTab('scala')"      role="tab">Scala tipografica</button>
+</nav>
+
+
+<!-- ══ TAB 1 ══ -->
+<section class="section active" id="specifiche">
+  <h2 class="sec-title">Specifiche tipografiche</h2>
+  <p class="sec-desc">Sistema a tre font. Martian Mono per headline e dati. Atkinson Hyperlegible per corpo testo. Archivo Semibold esclusivamente per le label sezione (pillola neo-brutalist). Interlinea 1.2 su tutto.</p>
+
+  <div class="spec-table">
+    <table>
+      <thead><tr><th>Elemento</th><th>Font</th><th>px preview</th><th>pt Canva</th><th>Weight</th><th>Interlinea</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Headline con fondino</td>
+          <td>Martian Mono</td><td>26px</td><td>~20pt</td><td>Bold 700</td><td>1.2</td>
+          <td><span class="badge" style="background:#0D0D0D;color:#F3F3F3;">box-decoration-break:clone · sentence case</span></td>
+        </tr>
+        <tr>
+          <td>Headline senza fondino</td>
+          <td>Martian Mono</td><td>26px</td><td>~20pt</td><td>Bold 700</td><td>1.2</td>
+          <td><span class="badge" style="background:#ECEEFF;color:#2229A8;">testo libero su sfondo · sentence case</span></td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td>Corpo principale</td>
+          <td>Atkinson Hyperlegible</td><td>15px</td><td>~11pt</td><td>Regular 400</td><td>1.2</td>
+          <td><span class="badge" style="background:#ECEEFF;color:#2229A8;">sentence case</span></td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td>Corpo secondario</td>
+          <td>Atkinson Hyperlegible</td><td>13px</td><td>~10pt</td><td>Regular 400</td><td>1.2</td>
+          <td><span class="badge" style="background:#ECEEFF;color:#2229A8;">sentence case</span></td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td>Enfasi nel corpo</td>
+          <td>Atkinson Hyperlegible</td><td>stesso</td><td>—</td><td>Bold 700</td><td>1.2</td>
+          <td><span class="badge" style="background:#ECEEFF;color:#2229A8;">&lt;strong&gt; inline</span></td>
+        </tr>
+        <tr>
+          <td>Label sezione</td>
+          <td>Archivo Semibold</td><td>11px</td><td>~8pt</td><td>Semibold 600</td><td>—</td>
+          <td><span class="badge" style="background:#FFF4C4;color:#0D0D0D;">uppercase · pillola · ombra flat 0 2px 0 · solo asse Y</span></td>
+        </tr>
+        <tr>
+          <td>Handle / fonte</td>
+          <td>Martian Mono</td><td>10px</td><td>~7.5pt</td><td>Regular 400</td><td>1.2</td>
+          <td><span class="badge" style="background:#FFF4C4;color:#0D0D0D;">opacità 50%</span></td>
+        </tr>
+        <tr>
+          <td>Numero statistica</td>
+          <td>Martian Mono</td><td>58px</td><td>~43pt</td><td>Bold 700</td><td>1.0</td>
+          <td><span class="badge" style="background:#0D0D0D;color:#FED74E;">numero e % sempre stesso colore</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-label">Regole d'uso</div>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-n">01 — Tre font, tre ruoli fissi</div>
+      <p>Martian Mono = headline e dati. Atkinson Hyperlegible = corpo testo, CTA, handle. Archivo Semibold = label sezione (pillola). I ruoli non si scambiano mai.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">02 — Martian Mono: con o senza fondino</div>
+      <p>Martian Mono può essere usato come headline con fondino colorato per riga <em>oppure</em> come testo libero su sfondo (cover, dati, slide impatto). Il fondino è un'opzione, non un obbligo.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">03 — Fondino: mai colori pastello</div>
+      <p>Il fondino usa solo i colori ufficiali: Nero, Bianco, Blu, Rosso, Verde. Mai versioni 50–300 della scala come fondino di headline.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">04 — Headline e sfondo: colori diversi</div>
+      <p>Il colore del fondino headline non replica mai il colore dello sfondo della slide. No fondino giallo su slide gialla, no blu su blu, ecc. Devono essere sempre due colori distinti.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">05 — Sentence case sempre</div>
+      <p>Headline e corpo sono in sentence case (solo prima lettera maiuscola). L'unica eccezione è la label sezione pillola, che è in uppercase per funzione visiva.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">06 — Fondino si adatta a ogni riga</div>
+      <p>Il fondino usa <code>box-decoration-break: clone</code>: ogni riga ha il proprio fondino indipendente. Non esiste un blocco unico che avvolge tutto il testo a più righe.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">07 — Numero e unità: stesso colore</div>
+      <p>Nelle slide statistiche, numero e unità (%, n, ecc.) condividono sempre il medesimo colore. Il colore viene applicato tramite classe sul wrapper, non sui singoli elementi.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">08 — Label: ombra flat solo asse Y</div>
+      <p>La label sezione ha <code>box-shadow: 0 2px 0</code>: spostamento verticale 2px, spostamento orizzontale zero. Opacità sempre 100%, sia su sfondo chiaro che su sfondo scuro.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">09 — Label: solo 4 colori</div>
+      <p>La label sezione usa solo Nero, Bianco, Giallo o Blu. Rosso e Verde non hanno contrasto sufficiente per il bordo sottile e il testo piccolo della pillola.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">10 — Una headline per slide</div>
+      <p>Una slide ha al massimo un elemento headline dominante. Più fondini colorati nella stessa slide creano rumore visivo e diluiscono l'impatto del brand.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-n">11 — Coerenza nel carosello</div>
+      <p>Ogni carosello usa una sola combinazione colore fondino per tutte le sue headline. Si può variare tra caroselli diversi, non all'interno dello stesso.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ TAB 2 ══ -->
+<section class="section" id="headline">
+  <h2 class="sec-title">Headline &amp; fondino</h2>
+  <p class="sec-desc">5 combinazioni colore approvate. C1–C3 uso libero. C4–C5 riservate a stati specifici. Mostrata sopra ogni headline la label sezione con ombra flat corretta (0 2px 0, opacità 100%).</p>
+
+  <div class="sec-label">Combinazioni primarie — uso libero</div>
+  <div class="combo-grid">
+
+    <div class="combo-card">
+      <div class="combo-preview" style="background:var(--cc-bianco);">
+        <div><span class="label-sezione">Diritti digitali</span>
+        <p class="headline hl-bianco-nero"><span>L'accessibilità<br>spacca le barriere</span></p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag">C1 — Primaria</span>
+        <span class="combo-hex">fondino <strong>#0D0D0D</strong> · testo <strong>#F3F3F3</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">21:1 AAA</span>
+      </div>
+      <div class="combo-note">Su sfondi bianchi e pastello. Massima leggibilità. Uso più frequente.</div>
+    </div>
+
+    <div class="combo-card">
+      <div class="combo-preview" style="background:var(--cc-bianco);">
+        <div><span class="label-sezione">Diritti digitali</span>
+        <p class="headline hl-nero-giallo"><span>L'accessibilità<br>spacca le barriere</span></p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag">C2 — Primaria</span>
+        <span class="combo-hex">fondino <strong>#FED74E</strong> · testo <strong>#0D0D0D</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">14.7:1 AAA</span>
+      </div>
+      <div class="combo-note">Accento energico. Su sfondi bianchi, pastello, Nero. Non su sfondo Giallo.</div>
+    </div>
+
+    <div class="combo-card">
+      <div class="combo-preview" style="background:var(--cc-bianco);">
+        <div><span class="label-sezione blu">Diritti digitali</span>
+        <p class="headline hl-bianco-blu"><span>L'accessibilità<br>spacca le barriere</span></p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag">C3 — Primaria</span>
+        <span class="combo-hex">fondino <strong>#434CE0</strong> · testo <strong>#F3F3F3</strong></span></div>
+        <span class="combo-ratio" style="color:#434CE0;">5.5:1 AA</span>
+      </div>
+      <div class="combo-note">Colore accent brand. Su sfondi bianchi e pastello. Non su sfondo Blu.</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Combinazioni uso limitato — stati specifici</div>
+  <div class="combo-grid">
+    <div class="combo-card" style="border-color:#F24E29;">
+      <div class="combo-preview" style="background:#FFF1EE;">
+        <div><span class="label-sezione">Attenzione</span>
+        <p class="headline hl-nero-rosso"><span>Barriera<br>ancora attiva</span></p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag" style="color:#F24E29;">C4 — Urgenza/errore</span>
+        <span class="combo-hex">fondino <strong>#F24E29</strong> · testo <strong>#0D0D0D</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">4.6:1 AA</span>
+      </div>
+      <div class="combo-note" style="color:#F24E29;font-weight:700;">Solo per enfasi critica, urgenza, errore. Non su sfondo Rosso.</div>
+    </div>
+
+    <div class="combo-card" style="border-color:#04BF68;">
+      <div class="combo-preview" style="background:#EAFBF2;">
+        <div><span class="label-sezione">Risultato</span>
+        <p class="headline hl-nero-verde"><span>Barriera<br>abbattuta</span></p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag" style="color:#04BF68;">C5 — Successo/conferma</span>
+        <span class="combo-hex">fondino <strong>#04BF68</strong> · testo <strong>#0D0D0D</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">6.8:1 AA</span>
+      </div>
+      <div class="combo-note" style="color:#017A42;font-weight:700;">Solo per conferma, successo, risultato positivo. Non su sfondo Verde.</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Headline Martian Mono senza fondino</div>
+  <div class="combo-grid">
+    <div class="combo-card">
+      <div class="combo-preview" style="background:var(--cc-nero);">
+        <div><span class="label-sezione white">Senza fondino</span>
+        <p class="headline-free" style="color:var(--cc-bianco);">L'accessibilità spacca le barriere</p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag">Libero — sfondo Nero</span>
+        <span class="combo-hex">testo <strong>#F3F3F3</strong> su <strong>#0D0D0D</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">21:1 AAA</span>
+      </div>
+      <div class="combo-note">Cover, titoli grandi, slide impatto. Nessun fondino per riga.</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-preview" style="background:var(--cc-giallo);">
+        <div><span class="label-sezione">Senza fondino</span>
+        <p class="headline-free" style="color:var(--cc-nero);">L'accessibilità spacca le barriere</p></div>
+      </div>
+      <div class="combo-meta">
+        <div><span class="combo-tag">Libero — sfondo Giallo</span>
+        <span class="combo-hex">testo <strong>#0D0D0D</strong> su <strong>#FED74E</strong></span></div>
+        <span class="combo-ratio" style="color:#04BF68;">14.7:1 AAA</span>
+      </div>
+      <div class="combo-note">Cover energica. Minimalista, massimo impatto.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ TAB 3 ══ -->
+<section class="section" id="template">
+  <h2 class="sec-title">Template slide</h2>
+  <p class="sec-desc">4 tipi di slide in formato 4:5 (preview 380×475px ≈ 35% di 1080×1350px). Ogni template rispetta la regola: colore fondino headline ≠ colore sfondo slide.</p>
+
+  <div class="sec-label">Tipo A — Cover / Prima slide</div>
+  <div class="carousel-row">
+    <div class="slide-wrap">
+      <span class="slide-outer-label">A1 — Sfondo Nero · headline libera bianca</span>
+      <div class="slide" style="background:var(--cc-nero);">
+        <div>
+          <span class="label-sezione white">Carosello</span>
+          <p class="headline-free" style="color:var(--cc-bianco);font-size:28px;">Rompiamo gli schemi,<br>abbattiamo le barriere</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle" style="color:var(--cc-bianco);">@carattericubitali</p>
+          <div class="arrow" style="color:var(--cc-giallo);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">A2 — Sfondo Bianco · fondino Nero (C1)</span>
+      <div class="slide" style="background:var(--cc-bianco);border:1px solid #e0e0e0;">
+        <div>
+          <span class="label-sezione">Carosello</span>
+          <p class="headline hl-bianco-nero"><span>Rompiamo gli schemi,<br>abbattiamo le barriere</span></p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle">@carattericubitali</p>
+          <div class="arrow" style="color:var(--cc-nero);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">A3 — Sfondo Giallo · fondino Nero (C1)</span>
+      <div class="slide" style="background:var(--cc-giallo);">
+        <div>
+          <span class="label-sezione">Carosello</span>
+          <p class="headline hl-bianco-nero"><span>Rompiamo gli schemi,<br>abbattiamo le barriere</span></p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle">@carattericubitali</p>
+          <div class="arrow" style="color:var(--cc-nero);">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Tipo B — Slide testo interna</div>
+  <div class="carousel-row">
+    <div class="slide-wrap">
+      <span class="slide-outer-label">B1 — Sfondo Bianco · fondino Nero (C1)</span>
+      <div class="slide" style="background:var(--cc-bianco);border:1px solid #e0e0e0;">
+        <div>
+          <span class="label-sezione">Accessibilità digitale</span>
+          <p class="headline hl-bianco-nero" style="margin-bottom:14px;"><span>Un approccio critico<br>è fondamentale</span></p>
+          <p class="body-text">Caratteri Cubitali è un'associazione di rottura. <strong>Un po' punk, radicale, provocatoria</strong>, perché quando si parla di accessibilità bisogna esserlo.</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle">carattericubitali.it</p>
+          <div class="arrow" style="color:var(--cc-nero);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">B2 — Sfondo pastello Blu · fondino Giallo (C2)</span>
+      <div class="slide" style="background:var(--cc-blu-50);border:1px solid var(--cc-blu-100);">
+        <div>
+          <span class="label-sezione" style="color:var(--cc-blu-800);border-color:var(--cc-blu-800);box-shadow:0 2px 0 var(--cc-blu-800);">Accessibilità digitale</span>
+          <p class="headline hl-nero-giallo" style="margin-bottom:14px;"><span>Un approccio critico<br>è fondamentale</span></p>
+          <p class="body-text" style="color:var(--cc-blu-800);">Caratteri Cubitali è un'associazione di rottura. <strong>Un po' punk, radicale, provocatoria</strong>, perché quando si parla di accessibilità bisogna esserlo.</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle" style="color:var(--cc-blu-800);">carattericubitali.it</p>
+          <div class="arrow" style="color:var(--cc-blu-800);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">B3 — Sfondo Nero · fondino Blu (C3)</span>
+      <div class="slide" style="background:var(--cc-nero);">
+        <div>
+          <span class="label-sezione white">Accessibilità digitale</span>
+          <p class="headline hl-bianco-blu" style="margin-bottom:14px;"><span>Un approccio critico<br>è fondamentale</span></p>
+          <p class="body-text" style="color:var(--cc-bianco);">Caratteri Cubitali è un'associazione di rottura. <strong>Un po' punk, radicale, provocatoria</strong>, perché quando si parla di accessibilità bisogna esserlo.</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle" style="color:var(--cc-bianco);">carattericubitali.it</p>
+          <div class="arrow" style="color:var(--cc-bianco);">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Tipo C — Statistica (numero e % sempre stesso colore)</div>
+  <div class="carousel-row">
+    <div class="slide-wrap">
+      <span class="slide-outer-label">C1 — Sfondo Nero · dati Giallo</span>
+      <div class="slide" style="background:var(--cc-nero);">
+        <div>
+          <span class="label-sezione giallo">Dato di contesto</span>
+          <div class="stat-wrap c-giallo"><span class="stat-number">78</span><span class="stat-unit">%</span></div>
+          <p class="stat-label" style="color:var(--cc-bianco);">delle persone con disabilità incontra barriere digitali ogni giorno</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle" style="color:var(--cc-bianco);">Fonte: ISTAT 2023</p>
+          <div class="arrow" style="color:var(--cc-giallo);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">C2 — Sfondo Bianco · dati Blu</span>
+      <div class="slide" style="background:var(--cc-bianco);border:1px solid #e0e0e0;">
+        <div>
+          <span class="label-sezione blu">Dato di contesto</span>
+          <div class="stat-wrap c-blu"><span class="stat-number">78</span><span class="stat-unit">%</span></div>
+          <p class="stat-label">delle persone con disabilità incontra barriere digitali ogni giorno</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle">Fonte: ISTAT 2023</p>
+          <div class="arrow" style="color:var(--cc-blu);">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">C3 — Sfondo Blu · dati Bianco</span>
+      <div class="slide" style="background:var(--cc-blu);">
+        <div>
+          <span class="label-sezione white">Dato di contesto</span>
+          <div class="stat-wrap c-bianco"><span class="stat-number">78</span><span class="stat-unit">%</span></div>
+          <p class="stat-label" style="color:var(--cc-bianco);">delle persone con disabilità incontra barriere digitali ogni giorno</p>
+        </div>
+        <div class="slide-foot">
+          <p class="handle" style="color:var(--cc-bianco);">Fonte: ISTAT 2023</p>
+          <div class="arrow" style="color:var(--cc-bianco);">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Tipo D — CTA / Ultima slide</div>
+  <div class="carousel-row">
+    <div class="slide-wrap">
+      <span class="slide-outer-label">D1 — Sfondo Nero · fondino Giallo</span>
+      <div class="slide" style="background:var(--cc-nero);justify-content:center;">
+        <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+          <span class="label-sezione giallo">Unisciti</span>
+          <p class="headline hl-nero-giallo"><span>Costruiamo insieme<br>un mondo accessibile</span></p>
+          <p class="body-text" style="color:var(--cc-bianco);">Seguici e condividi. Ogni voce conta.</p>
+          <div style="border:1.5px solid var(--cc-giallo);padding:7px 18px;color:var(--cc-giallo);font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:.15em;text-transform:uppercase;">Scrivici →</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-wrap">
+      <span class="slide-outer-label">D2 — Sfondo Bianco · fondino Blu (C3)</span>
+      <div class="slide" style="background:var(--cc-bianco);justify-content:center;border:1px solid #e0e0e0;">
+        <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;">
+          <span class="label-sezione blu">Unisciti</span>
+          <p class="headline hl-bianco-blu"><span>Costruiamo insieme<br>un mondo accessibile</span></p>
+          <p class="body-text">Seguici e condividi. Ogni voce conta.</p>
+          <div style="border:1.5px solid var(--cc-blu);padding:7px 18px;color:var(--cc-blu);font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:.15em;text-transform:uppercase;">Scrivici →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ TAB 4 ══ -->
+<section class="section" id="scala">
+  <h2 class="sec-title">Scala tipografica</h2>
+  <p class="sec-desc">Tutti gli elementi in sequenza. Dimensioni calibrate per il preview 380×475px (~35% di 1080×1350px Canva).</p>
+
+  <div class="sec-label">Martian Mono</div>
+  <div style="display:flex;flex-direction:column;gap:22px;margin-bottom:36px;">
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px;">Headline · 26px · Bold · interlinea 1.2 · con fondino (C1)</div>
+      <p class="headline hl-bianco-nero"><span>L'accessibilità spacca le barriere</span></p>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px;">Headline · 26px · Bold · interlinea 1.2 · senza fondino</div>
+      <p class="headline-free">L'accessibilità spacca le barriere</p>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px;">Statistica · 58px · Bold · interlinea 1.0 · numero e % stesso colore</div>
+      <div class="stat-wrap c-nero"><span class="stat-number">78</span><span class="stat-unit">%</span></div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:6px;">Handle / fonte · 10px · Regular · opacità 50%</div>
+      <p class="handle">@carattericubitali · carattericubitali.it</p>
+    </div>
+  </div>
+
+  <div class="sec-label">Atkinson Hyperlegible</div>
+  <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:36px;max-width:540px;">
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:6px;">Corpo L · 15px · Regular · interlinea 1.2</div>
+      <p class="body-text">L'accessibilità non è un extra, ma una base fondamentale della comunicazione. <strong>Vogliamo tutto.</strong></p>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:6px;">Corpo M · 13px · Regular · interlinea 1.2</div>
+      <p class="body-text sm">L'accessibilità non è un extra, ma una base fondamentale della comunicazione. <strong>Vogliamo tutto.</strong></p>
+    </div>
+  </div>
+
+  <div class="sec-label">Archivo Semibold — Label sezione neo-brutalist</div>
+  <p style="font-size:11px;opacity:.6;margin-bottom:16px;">Box-shadow: 0 2px 0 [colore] — solo asse Y, opacità 100% sempre. Colori ammessi: Nero, Bianco, Giallo, Blu.</p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:36px;">
+    <div style="background:#f5f5f5;padding:16px 20px;border-radius:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px;">Su sfondo chiaro — ombra Nero</div>
+      <span class="label-sezione">Diritti digitali</span>
+    </div>
+    <div style="background:var(--cc-nero);padding:16px 20px;border-radius:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#555;margin-bottom:8px;">Su sfondo scuro — ombra Bianco</div>
+      <span class="label-sezione white">Diritti digitali</span>
+    </div>
+    <div style="background:var(--cc-giallo);padding:16px 20px;border-radius:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:8px;">Su sfondo Giallo — ombra Nero</div>
+      <span class="label-sezione">Diritti digitali</span>
+    </div>
+    <div style="background:var(--cc-blu-50);padding:16px 20px;border-radius:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:8px;">Su pastello Blu — ombra Blu</div>
+      <span class="label-sezione blu">Diritti digitali</span>
+    </div>
+  </div>
+</section>
+
+<footer>Caratteri Cubitali — Design System v1.0 — Tipografia Caroselli</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

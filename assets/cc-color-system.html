@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caratteri Cubitali — Color System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cc-black: #0D0D0D;
+    --cc-white: #F3F3F3;
+    --font: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: #F3F3F3;
+    color: #0D0D0D;
+    padding: 32px 24px;
+    min-height: 100vh;
+  }
+
+  header {
+    margin-bottom: 40px;
+    border-bottom: 2px solid #0D0D0D;
+    padding-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  header p {
+    font-size: 13px;
+    margin-top: 6px;
+    opacity: 0.65;
+    max-width: 600px;
+    line-height: 1.5;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+
+  /* SCALE GRID */
+  .palette-block {
+    margin-bottom: 48px;
+  }
+
+  .palette-block h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .scale-row {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .swatch {
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .swatch-color {
+    height: 56px;
+    width: 100%;
+  }
+
+  .swatch-info {
+    background: white;
+    padding: 6px 5px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .swatch-step {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    display: block;
+  }
+
+  .swatch-hex {
+    font-size: 9px;
+    font-family: 'Courier New', monospace;
+    color: #0D0D0D;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .swatch.is-brand {
+    outline: 2.5px solid #0D0D0D;
+    outline-offset: 2px;
+  }
+
+  .swatch-color-inner {
+    position: relative;
+    height: 56px;
+    width: 100%;
+  }
+
+  .brand-star {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    font-size: 13px;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  }
+
+  /* CONTRAST MATRIX */
+  .matrix-section {
+    margin-top: 56px;
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .combo-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .combo-preview {
+    padding: 16px;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .combo-preview span {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .combo-meta {
+    background: white;
+    padding: 8px 10px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .combo-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #888;
+    display: block;
+  }
+
+  .combo-ratio {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+  }
+
+  .badge-aaa { background: #04BF68; color: white; }
+  .badge-aa  { background: #434CE0; color: white; }
+  .badge-fail { background: #F24E29; color: white; }
+
+  /* PASTELLO USE CASES */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .usecase-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .usecase-bg {
+    padding: 24px;
+  }
+
+  .usecase-bg h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .usecase-bg p {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  .usecase-meta {
+    background: white;
+    padding: 10px 14px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .tab-btn {
+    padding: 8px 16px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+  }
+
+  .tab-btn.active {
+    color: #0D0D0D;
+    border-bottom-color: #434CE0;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* TOKEN TABLE */
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 16px;
+  }
+
+  .token-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #0D0D0D;
+    color: #F3F3F3;
+  }
+
+  .token-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    vertical-align: middle;
+  }
+
+  .token-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+  .token-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .mono {
+    font-family: 'Courier New', monospace;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 5px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 20px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    background: white;
+    transition: all 0.15s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: #434CE0;
+    background: #434CE0;
+    color: white;
+  }
+
+  .copy-hint {
+    font-size: 10px;
+    opacity: 0.5;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .copied-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0D0D0D;
+    color: #FED74E;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    transform: translateY(60px);
+    transition: transform 0.2s;
+    z-index: 999;
+  }
+  .copied-toast.show { transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Caratteri Cubitali — Color System</h1>
+  <p>Palette estesa con scale 50→900 per ogni colore. Ogni gradazione include il rapporto di contrasto WCAG verificato. Le combinazioni approvate rispettano AA (4.5:1 testo normale) o AAA (7:1) secondo WCAG 2.1.</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('scale', this)">Scale colori</button>
+  <button class="tab-btn" onclick="switchTab('pastello', this)">Combinazioni sfondo</button>
+  <button class="tab-btn" onclick="switchTab('matrix', this)">Matrice contrasti</button>
+  <button class="tab-btn" onclick="switchTab('tokens', this)">Design tokens</button>
+</div>
+
+<!-- TAB 1: SCALE -->
+<div id="tab-scale" class="tab-panel active">
+  <p class="copy-hint">Clicca su un campione per copiare il valore hex</p>
+  <div id="scales-container"></div>
+</div>
+
+<!-- TAB 2: COMBINAZIONI SFONDO -->
+<div id="tab-pastello" class="tab-panel">
+  <div class="section-title">Combinazioni sfondo approvate</div>
+  <p style="font-size:12px;opacity:.7;margin-bottom:20px;max-width:600px;">Combinazioni testo/sfondo accessibili. Regola base: testo Nero su sfondi pastello (50–200) e su sfondo Bianco. Sfondo Nero: testo Bianco o colori brand che superano AA. Eccezioni blu: Blu scuro su Blu chiaro, Blu 500 su neutri chiari.</p>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterPastello('all', this)">Tutte</button>
+    <button class="filter-btn" onclick="filterPastello('blu', this)">Blu</button>
+    <button class="filter-btn" onclick="filterPastello('giallo', this)">Giallo</button>
+    <button class="filter-btn" onclick="filterPastello('nero', this)">Nero</button>
+    <button class="filter-btn" onclick="filterPastello('rosso', this)">Rosso</button>
+    <button class="filter-btn" onclick="filterPastello('verde', this)">Verde</button>
+  </div>
+
+  <div id="pastello-grid" class="usecase-grid"></div>
+</div>
+
+<!-- TAB 3: MATRIX -->
+<div id="tab-matrix" class="tab-panel">
+  <div class="section-title">Matrice testo × sfondo — colori principali</div>
+  <p style="font-size:12px;opacity:.7;margin-bottom:20px;max-width:600px;">Solo combinazioni con contrasto ≥ 3:1 (AA large text). Le combinazioni con ≥ 4.5:1 sono sicure per corpo testo.</p>
+  <div id="matrix-container"></div>
+</div>
+
+<!-- TAB 4: TOKENS -->
+<div id="tab-tokens" class="tab-panel">
+  <div class="section-title">Design tokens — esportabili in CSS/JSON</div>
+  <div id="tokens-container"></div>
+</div>
+
+<div class="copied-toast" id="toast">Copiato!</div>
+
+<script>
+// ─── PALETTE DEFINITION ───────────────────────────────────────────────────────
+// Each scale generated with perceptual lightness interpolation
+// Base value = 500 (brand canonical)
+
+const PALETTE = {
+  blu: {
+    name: 'Blu Vibrante',
+    base: '#434CE0',
+    note: 'Colore Accent principale',
+    scale: {
+      50:  '#ECEEFF',
+      100: '#D4D8FF',
+      200: '#A9B1FF',
+      300: '#7E8AFF',
+      400: '#5C67F5',
+      500: '#434CE0',
+      600: '#3239C4',
+      700: '#2229A8',
+      800: '#141B82',
+      900: '#0B105C',
+    }
+  },
+  giallo: {
+    name: 'Giallo Vivo',
+    base: '#FED74E',
+    note: 'Colore secondario',
+    scale: {
+      50:  '#FFFBEC',
+      100: '#FFF4C4',
+      200: '#FEEA8A',
+      300: '#FEDE62',
+      400: '#FED74E',
+      500: '#F5C820',
+    }
+  },
+  nero: {
+    name: 'Nero',
+    base: '#0D0D0D',
+    note: 'Colore neutro primario',
+    scale: {
+      50:  '#F3F3F3',
+      100: '#E0E0E0',
+      200: '#C5C5C5',
+      300: '#ABABAB',
+      400: '#828282',
+      500: '#5C5C5C',
+      600: '#3D3D3D',
+      700: '#2A2A2A',
+      800: '#1A1A1A',
+      900: '#0D0D0D',
+    }
+  },
+  rosso: {
+    name: 'Rosso',
+    base: '#F24E29',
+    note: 'Uso limitato — stati di errore/enfasi',
+    scale: {
+      50:  '#FFF1EE',
+      100: '#FFD9D0',
+      200: '#FFAB96',
+      300: '#FF7F5E',
+      400: '#F85E38',
+      500: '#F24E29',
+    }
+  },
+  verde: {
+    name: 'Verde',
+    base: '#04BF68',
+    note: 'Uso limitato — stati di successo/conferma',
+    scale: {
+      50:  '#EAFBF2',
+      100: '#C2F2DA',
+      200: '#7EE5B4',
+      300: '#3ED490',
+      400: '#12C97A',
+      500: '#04BF68',
+    }
+  }
+};
+
+// ─── WCAG CONTRAST ─────────────────────────────────────────────────────────────
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return [r,g,b];
+}
+
+function sRGB(v) {
+  v /= 255;
+  return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+}
+
+function luminance(hex) {
+  const [r,g,b] = hexToRgb(hex);
+  return 0.2126*sRGB(r) + 0.7152*sRGB(g) + 0.0722*sRGB(b);
+}
+
+function contrast(hex1, hex2) {
+  const l1 = luminance(hex1);
+  const l2 = luminance(hex2);
+  const lighter = Math.max(l1,l2);
+  const darker  = Math.min(l1,l2);
+  return +((lighter + 0.05)/(darker + 0.05)).toFixed(2);
+}
+
+function wcagBadge(ratio) {
+  if (ratio >= 7)   return '<span class="badge badge-aaa">AAA</span>';
+  if (ratio >= 4.5) return '<span class="badge badge-aa">AA</span>';
+  if (ratio >= 3)   return '<span class="badge badge-aa" style="background:#F5C820;color:#0D0D0D;">AA Large</span>';
+  return '<span class="badge badge-fail">Fail</span>';
+}
+
+// ─── BUILD SCALES ──────────────────────────────────────────────────────────────
+function buildScales() {
+  const container = document.getElementById('scales-container');
+  for (const [key, palette] of Object.entries(PALETTE)) {
+    const block = document.createElement('div');
+    block.className = 'palette-block';
+
+    const dot = `<span class="color-dot" style="background:${palette.base}"></span>`;
+    block.innerHTML = `<h2>${dot}${palette.name} <span style="font-weight:400;opacity:.5;font-size:11px;">${palette.note}</span></h2>`;
+
+    const row = document.createElement('div');
+    row.className = 'scale-row';
+
+    for (const [step, hex] of Object.entries(palette.scale)) {
+      const cBlack = contrast(hex, '#0D0D0D');
+      const cWhite = contrast(hex, '#F3F3F3');
+      const isBrand = (hex.toLowerCase() === palette.base.toLowerCase());
+      // pick star color that contrasts on this swatch bg
+      const starColor = cBlack > cWhite ? '#0D0D0D' : '#F3F3F3';
+
+      const swatch = document.createElement('div');
+      swatch.className = 'swatch' + (isBrand ? ' is-brand' : '');
+      swatch.onclick = () => copyHex(hex);
+      swatch.title = `Contrasto vs nero: ${cBlack}:1 | vs bianco: ${cWhite}:1${isBrand ? ' ★ Colore ufficiale' : ''}`;
+      swatch.innerHTML = `
+        <div class="swatch-color-inner" style="background:${hex}">
+          ${isBrand ? `<span class="brand-star" style="color:${starColor};">★</span>` : ''}
+        </div>
+        <div class="swatch-info">
+          <span class="swatch-step">${isBrand ? '★ ' : ''}${step}</span>
+          <span class="swatch-hex">${hex}</span>
+        </div>`;
+      row.appendChild(swatch);
+    }
+
+    block.appendChild(row);
+
+    // mini contrast summary
+    const summary = document.createElement('div');
+    summary.style.cssText = 'font-size:10px;opacity:.55;margin-top:4px;';
+    const safeOnWhite = Object.entries(palette.scale).filter(([s,h]) => contrast(h,'#F3F3F3') >= 4.5).map(([s]) => s);
+    const safeOnBlack = Object.entries(palette.scale).filter(([s,h]) => contrast(h,'#0D0D0D') >= 4.5).map(([s]) => s);
+    summary.textContent = `AA su bianco/grigio chiaro: passi ${safeOnWhite.join(', ') || '—'} | AA su nero: passi ${safeOnBlack.join(', ') || '—'}`;
+    block.appendChild(summary);
+    container.appendChild(block);
+  }
+}
+
+// ─── BUILD COMBINAZIONI SFONDO ────────────────────────────────────────────────
+// Rules:
+// 1. Testo NERO su sfondi pastello 50–200 (esclusi Nero 100 #E0E0E0 e Nero 200 #C5C5C5)
+//    + Testo NERO su Bianco #F3F3F3
+// 2. Eccezione blu: Blu 700/800 su Blu 50/100
+// 3. Eccezione blu: Blu 500 (brand) su Bianco/Grigio chiaro
+// 4. Sfondo Nero: Bianco, Blu 500, Giallo 400, Rosso 500, Verde 500 come testo
+const PASTELLO_COMBOS = [];
+
+function buildPastello() {
+  const NERO    = '#0D0D0D';
+  const BIANCO  = '#F3F3F3';
+  const NERO_BG = '#0D0D0D';
+
+  // Rule 1 — nero text on pastello 50–200, skip nero-100 (#E0E0E0) e nero-200 (#C5C5C5)
+  const SKIP_BG = ['#E0E0E0', '#C5C5C5'];
+  const pastelloSteps = [50, 100, 200];
+
+  for (const [key, pal] of Object.entries(PALETTE)) {
+    for (const bg of pastelloSteps) {
+      const bgHex = pal.scale[bg];
+      if (!bgHex) continue;
+      if (SKIP_BG.includes(bgHex)) continue;
+      const ratio = contrast(bgHex, NERO);
+      if (ratio >= 4.5) {
+        PASTELLO_COMBOS.push({ key, rule: 'nero-su-pastello', bgLabel: `${pal.name} ${bg}`, bgHex, txtHex: NERO, txtLabel: 'Nero', ratio });
+      }
+    }
+  }
+
+  // Rule 1b — nero text on Bianco
+  PASTELLO_COMBOS.push({ key: 'nero', rule: 'nero-su-bianco', bgLabel: 'Bianco', bgHex: BIANCO, txtHex: NERO, txtLabel: 'Nero', ratio: contrast(BIANCO, NERO) });
+
+  // Rule 2 — Blu 700/800 su Blu 50/100
+  for (const bg of [50, 100]) {
+    for (const txt of [700, 800]) {
+      const bgHex  = PALETTE.blu.scale[bg];
+      const txtHex = PALETTE.blu.scale[txt];
+      const ratio  = contrast(bgHex, txtHex);
+      if (ratio >= 4.5) {
+        PASTELLO_COMBOS.push({ key: 'blu', rule: 'blu-su-blu', bgLabel: `Blu ${bg}`, bgHex, txtHex, txtLabel: `Blu ${txt}`, ratio });
+      }
+    }
+  }
+
+  // Rule 3 — Blu 500 su neutri chiari
+  for (const bg of [{ label: 'Bianco', hex: BIANCO }, { label: 'Nero 50', hex: PALETTE.nero.scale[50] }]) {
+    const ratio = contrast(bg.hex, PALETTE.blu.scale[500]);
+    if (ratio >= 4.5) {
+      PASTELLO_COMBOS.push({ key: 'blu', rule: 'blu500-su-bianco', bgLabel: bg.label, bgHex: bg.hex, txtHex: PALETTE.blu.scale[500], txtLabel: 'Blu 500', ratio });
+    }
+  }
+
+  // Rule 4 — sfondo NERO: testo bianco + colori brand accessibili
+  const onNero = [
+    { key: 'nero',  txtHex: BIANCO,              txtLabel: 'Bianco' },
+    { key: 'blu',   txtHex: PALETTE.blu.scale[500],   txtLabel: 'Blu 500' },
+    { key: 'blu',   txtHex: PALETTE.blu.scale[300],   txtLabel: 'Blu 300' },
+    { key: 'giallo',txtHex: PALETTE.giallo.scale[400], txtLabel: 'Giallo 400' },
+    { key: 'rosso', txtHex: PALETTE.rosso.scale[500],  txtLabel: 'Rosso 500' },
+    { key: 'verde', txtHex: PALETTE.verde.scale[500],  txtLabel: 'Verde 500' },
+  ];
+  for (const t of onNero) {
+    const ratio = contrast(NERO_BG, t.txtHex);
+    if (ratio >= 4.5) {
+      PASTELLO_COMBOS.push({ key: t.key, rule: 'su-nero', bgLabel: 'Nero', bgHex: NERO_BG, txtHex: t.txtHex, txtLabel: t.txtLabel, ratio });
+    }
+  }
+
+  renderPastello(PASTELLO_COMBOS);
+}
+
+function renderPastello(combos) {
+  const grid = document.getElementById('pastello-grid');
+  grid.innerHTML = '';
+  if (combos.length === 0) {
+    grid.innerHTML = '<p style="opacity:.5;font-size:12px;">Nessuna combinazione per questo filtro.</p>';
+    return;
+  }
+  combos.forEach(c => {
+    const ruleLabel = c.rule === 'blu-su-blu'       ? 'Eccezione: Blu scuro su Blu chiaro'
+                    : c.rule === 'blu500-su-bianco'  ? 'Eccezione: Blu 500 su neutro chiaro'
+                    : c.rule === 'su-nero'           ? 'Sfondo Nero'
+                    : c.rule === 'nero-su-bianco'    ? 'Regola base: Nero su Bianco'
+                    : 'Regola base: Nero su pastello';
+    const card = document.createElement('div');
+    card.className = 'usecase-card';
+    card.setAttribute('data-color', c.key);
+    card.innerHTML = `
+      <div class="usecase-bg" style="background:${c.bgHex};">
+        <h3 style="color:${c.txtHex};">Caratteri Cubitali</h3>
+        <p style="color:${c.txtHex};opacity:.85;">L'accessibilità spacca le barriere. Testo su sfondo pastello con contrasto verificato.</p>
+      </div>
+      <div class="usecase-meta">
+        <div style="flex:1;">
+          <span style="font-size:9px;opacity:.5;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px;">${ruleLabel}</span>
+          <span class="mono" style="font-size:9px;">${c.bgHex}</span> bg &nbsp;
+          <span class="mono" style="font-size:9px;">${c.txtHex}</span> testo
+        </div>
+        <div style="text-align:right;">
+          <strong style="font-size:13px;">${c.ratio}:1</strong><br>
+          ${wcagBadge(c.ratio)}
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function filterPastello(color, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = color === 'all' ? PASTELLO_COMBOS : PASTELLO_COMBOS.filter(c => c.key === color);
+  renderPastello(filtered);
+}
+
+// ─── BUILD MATRIX ─────────────────────────────────────────────────────────────
+function buildMatrix() {
+  const container = document.getElementById('matrix-container');
+
+  const APPROVED = [
+    // ── Sfondo Bianco/Grigio chiaro ──────────────────────────────────────────
+    { bg: { name: 'Bianco',     hex: '#F3F3F3' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Bianco',     hex: '#F3F3F3' },  txt: { name: 'Blu 500',  hex: '#434CE0' } },
+    // ── Sfondo pastello Blu ──────────────────────────────────────────────────
+    { bg: { name: 'Blu 50',     hex: '#ECEEFF' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Blu 100',    hex: '#D4D8FF' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Blu 200',    hex: '#A9B1FF' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Blu 50',     hex: '#ECEEFF' },  txt: { name: 'Blu 700',  hex: '#2229A8' } },
+    { bg: { name: 'Blu 100',    hex: '#D4D8FF' },  txt: { name: 'Blu 800',  hex: '#141B82' } },
+    // ── Sfondo pastello Giallo ───────────────────────────────────────────────
+    { bg: { name: 'Giallo 50',  hex: '#FFFBEC' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Giallo 100', hex: '#FFF4C4' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Giallo 200', hex: '#FEEA8A' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Giallo 400', hex: '#FED74E' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    // ── Sfondo pastello Rosso ────────────────────────────────────────────────
+    { bg: { name: 'Rosso 50',   hex: '#FFF1EE' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Rosso 100',  hex: '#FFD9D0' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    // ── Sfondo pastello Verde ────────────────────────────────────────────────
+    { bg: { name: 'Verde 50',   hex: '#EAFBF2' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    { bg: { name: 'Verde 100',  hex: '#C2F2DA' },  txt: { name: 'Nero',     hex: '#0D0D0D' } },
+    // ── Sfondo Nero ──────────────────────────────────────────────────────────
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Bianco',   hex: '#F3F3F3' } },
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Blu 500',  hex: '#434CE0' } },
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Blu 300',  hex: '#7E8AFF' } },
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Giallo 400', hex: '#FED74E' } },
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Rosso 500', hex: '#F24E29' } },
+    { bg: { name: 'Nero',       hex: '#0D0D0D' },  txt: { name: 'Verde 500', hex: '#04BF68' } },
+    // ── Sfondo scuro Blu ─────────────────────────────────────────────────────
+    { bg: { name: 'Blu 800',    hex: '#141B82' },  txt: { name: 'Bianco',   hex: '#F3F3F3' } },
+    { bg: { name: 'Blu 900',    hex: '#0B105C' },  txt: { name: 'Bianco',   hex: '#F3F3F3' } },
+  ];
+
+  const grid = document.createElement('div');
+  grid.className = 'matrix-grid';
+
+  APPROVED.forEach(({ bg, txt }) => {
+    const ratio = contrast(bg.hex, txt.hex);
+    if (ratio < 3) return;
+
+    const card = document.createElement('div');
+    card.className = 'combo-card';
+    card.innerHTML = `
+      <div class="combo-preview" style="background:${bg.hex};">
+        <span style="color:${txt.hex}; font-size:22px; font-weight:700;">Aa</span>
+      </div>
+      <div class="combo-meta">
+        <span class="combo-label">bg ${bg.name} / txt ${txt.name}</span>
+        <div class="combo-ratio">${ratio}:1 ${wcagBadge(ratio)}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+}
+
+// ─── BUILD TOKENS ──────────────────────────────────────────────────────────────
+function buildTokens() {
+  const container = document.getElementById('tokens-container');
+
+  let cssVars = ':root {\n  /* === Caratteri Cubitali Design Tokens === */\n\n';
+  let jsonTokens = '{\n  "color": {\n';
+  const rows = [];
+
+  for (const [key, pal] of Object.entries(PALETTE)) {
+    cssVars += `  /* ${pal.name} */\n`;
+    jsonTokens += `    "${key}": {\n`;
+    for (const [step, hex] of Object.entries(pal.scale)) {
+      const token = `--cc-${key}-${step}`;
+      cssVars += `  ${token}: ${hex};\n`;
+      jsonTokens += `      "${step}": "${hex}",\n`;
+      const cBlack = contrast(hex, '#0D0D0D');
+      const cWhite = contrast(hex, '#F3F3F3');
+      rows.push({ token, hex, color: key, step, cBlack, cWhite });
+    }
+    cssVars += '\n';
+    jsonTokens = jsonTokens.slice(0,-2) + '\n    },\n';
+  }
+
+  cssVars += '  /* Semantic tokens */\n';
+  cssVars += '  --cc-accent:    var(--cc-blu-500);\n';
+  cssVars += '  --cc-secondary: var(--cc-giallo-400);\n';
+  cssVars += '  --cc-surface:   var(--cc-nero-50);\n';
+  cssVars += '  --cc-on-surface:var(--cc-nero-900);\n';
+  cssVars += '}\n';
+
+  jsonTokens = jsonTokens.slice(0,-2) + '\n  }\n}';
+
+  // CSS textarea
+  const cssSection = document.createElement('div');
+  cssSection.innerHTML = `<div class="section-title">CSS Custom Properties</div>`;
+  const textarea = document.createElement('textarea');
+  textarea.value = cssVars;
+  textarea.style.cssText = 'width:100%;height:280px;font-family:monospace;font-size:11px;padding:12px;border:1.5px solid #e0e0e0;border-radius:8px;background:#1a1a1a;color:#04BF68;margin-bottom:24px;';
+  textarea.readOnly = true;
+  cssSection.appendChild(textarea);
+
+  const copyBtn = document.createElement('button');
+  copyBtn.textContent = 'Copia CSS Variables';
+  copyBtn.style.cssText = 'background:#434CE0;color:white;border:none;padding:8px 20px;border-radius:6px;font-family:inherit;font-weight:700;font-size:12px;cursor:pointer;margin-bottom:32px;';
+  copyBtn.onclick = () => { navigator.clipboard.writeText(cssVars); showToast(); };
+  cssSection.appendChild(copyBtn);
+
+  container.appendChild(cssSection);
+
+  // Token table
+  const tableSection = document.createElement('div');
+  tableSection.innerHTML = `<div class="section-title">Tabella token completa</div>`;
+  const table = document.createElement('table');
+  table.className = 'token-table';
+  table.innerHTML = `<thead><tr>
+    <th>Token</th><th>Hex</th><th>Contrasto vs Nero</th><th>Contrasto vs Bianco</th><th>WCAG</th>
+  </tr></thead><tbody></tbody>`;
+  const tbody = table.querySelector('tbody');
+  rows.forEach(r => {
+    const wcagBlack = r.cBlack >= 7 ? 'AAA' : r.cBlack >= 4.5 ? 'AA' : r.cBlack >= 3 ? 'AA Large' : '—';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="mono" style="font-size:10px;">${r.token}</td>
+      <td><span class="token-swatch" style="background:${r.hex}"></span><span class="mono">${r.hex}</span></td>
+      <td>${r.cBlack}:1</td>
+      <td>${r.cWhite}:1</td>
+      <td>${wcagBadge(Math.max(r.cBlack, r.cWhite))}</td>`;
+    tbody.appendChild(tr);
+  });
+  tableSection.appendChild(table);
+  container.appendChild(tableSection);
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function copyHex(hex) {
+  navigator.clipboard.writeText(hex);
+  showToast(hex);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg ? `Copiato: ${msg}` : 'Copiato!';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+buildScales();
+buildPastello();
+buildMatrix();
+buildTokens();
+</script>
+</body>
+</html>
