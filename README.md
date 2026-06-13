@@ -1,6 +1,6 @@
 # Caratteri Cubitali — Brand System
 
-Design system ufficiale di **Caratteri Cubitali APS**, associazione per l'accessibilità digitale e i diritti delle persone con disabilità.
+Design system ufficiale di **Caratteri Cubitali APS**, associazione di promozione sociale che si occupa di accessibilità digitale e di diritto alla fruizione dei contenuti culturali. Caratteri Cubitali si occupa di formazione e progetti per promuovere l'accessibilità dei contenuti culturali e della comunicazione attraverso la creatività e la sperimentazione con una prospettiva multidisciplinare.
 
 ---
 
@@ -27,7 +27,7 @@ Design system ufficiale di **Caratteri Cubitali APS**, associazione per l'access
 ## Brand in sintesi
 
 ### Identità
-Caratteri Cubitali è un'associazione giovane e ribelle, nata nel 2022. Il nome viene da un sogno punk: una scritta gigante a pennello con vernice rossa su un muro. L'approccio al design riflette questa identità: provocatorio, accessibile, irriverente.
+Caratteri Cubitali è un'associazione giovane e ribelle, nata nel 2022. L'approccio al design riflette questa identità: provocatorio, accessibile, irriverente.
 
 ### Colori ufficiali
 | | Hex | Ruolo |
