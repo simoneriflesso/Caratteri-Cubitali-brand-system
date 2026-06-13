@@ -15,6 +15,7 @@ Design system ufficiale di **Caratteri Cubitali APS**, associazione per l'access
 ├── assets/
 │   ├── cc-color-system.html     # Esplora palette interattiva con WCAG
 │   └── cc-typography.html       # Simulazione slide caroselli
+├── design-system/tone.md      # Tono di voce e istruzioni per la scrittura
 └── (in arrivo)
     ├── design-system/brand.md   # Logo, versioni, utilizzi corretti/scorretti
     ├── design-system/tone.md    # Tono di voce e comunicazione
