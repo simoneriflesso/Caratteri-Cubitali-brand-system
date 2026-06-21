@@ -78,3 +78,15 @@ Simulazione slide caroselli in formato 4:5. Include:
 - La palette è verificata per daltonismo (nessun conflitto tra i 4 colori primari)
 - Font Atkinson Hyperlegible progettato specificamente per bassa visione
 - Interlinea 1.2 universale per leggibilità
+
+---
+
+## Skill Claude
+
+### `cc-tono-di-voce.skill`
+
+Skill da installare in Claude per scrivere contenuti con il tono di Caratteri Cubitali.
+
+**Come usarla:** installa il file `.skill` in Claude, poi chiedi di scrivere qualsiasi contenuto (post, articolo, carosello, comunicato, CTA) per Caratteri Cubitali — la skill si attiva automaticamente.
+
+**Attiva su:** "scrivi un post per CC", "articolo con il nostro tono", "carosello sull'accessibilità", "comunicato stampa", "riscrivilo come CC", e simili.
