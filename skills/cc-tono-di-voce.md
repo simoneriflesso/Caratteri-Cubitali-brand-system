@@ -2,13 +2,14 @@
 name: cc-tono-di-voce
 description: >
   Scrivi contenuti con il tono di voce di Caratteri Cubitali APS.
-  Attiva questa skill ogni volta che ti chiedo di scrivere qualcosa
-  per Caratteri Cubitali: un post social, una caption, un articolo,
-  un comunicato stampa, un carosello, un testo per il sito, una
-  newsletter, un titolo, una CTA, o qualsiasi altro contenuto
-  comunicativo. Attiva anche quando chiedo di "riscrivere con il
-  nostro tono", "adattare per CC", "come lo scriverebbe Caratteri
-  Cubitali", o simili. Non aspettare conferma: applica subito.
+  Attiva questa skill SOLO quando il nome "Caratteri Cubitali" o
+  l'abbreviazione "CC" compare esplicitamente nella richiesta.
+  Esempi che attivano la skill: "scrivi un post per Caratteri
+  Cubitali", "comunicato stampa per CC", "riscrivilo con il tono
+  di CC", "come lo direbbe Caratteri Cubitali".
+  NON attivare per richieste generiche su accessibilità, tono di
+  voce, caroselli o comunicazione che non menzionino esplicitamente
+  Caratteri Cubitali o CC.
 ---
 
 # Skill: Tono di voce — Caratteri Cubitali
