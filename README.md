@@ -90,3 +90,12 @@ Skill da installare in Claude per scrivere contenuti con il tono di Caratteri Cu
 **Come usarla:** installa il file `.skill` in Claude, poi chiedi di scrivere qualsiasi contenuto (post, articolo, carosello, comunicato, CTA) per Caratteri Cubitali — la skill si attiva automaticamente.
 
 **Attiva su:** "scrivi un post per CC", "articolo con il nostro tono", "carosello sull'accessibilità", "comunicato stampa", "riscrivilo come CC", e simili.
+
+---
+
+## Collaborazione
+
+Documentazione per chi lavora o vuole lavorare al brand system.
+
+- [Guida GitHub per amministratori](docs/collaborazione/github-amministrazione.md) — gestione dell'organizzazione, ruoli e permessi
+- [Guida GitHub per collaboratori](docs/collaborazione/github-collaboratori.md) — come proporre modifiche con *branch* e *pull request*
