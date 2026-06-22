@@ -18,17 +18,22 @@ Documentazione per chi lavora o vuole lavorare al brand system.
 ```
 /
 ├── README.md
-├── design-system/
-│   ├── colors.md          # Palette, scale, token CSS, regole d'uso
-│   └── typography.md      # Font, scala, headline fondino, label, statistica
 ├── assets/
-│   ├── cc-color-system.html     # Esplora palette interattiva con WCAG
-│   └── cc-typography.html       # Simulazione slide caroselli
-├── design-system/tone.md      # Tono di voce e istruzioni per la scrittura
-└── (in arrivo)
-    ├── design-system/brand.md   # Logo, versioni, utilizzi corretti/scorretti
-    ├── design-system/tone.md    # Tono di voce e comunicazione
-    └── design-system/ai-prompts.md  # Prompt AI per generazione immagini
+│   ├── CC_logo_completo.svg          # Logo simbolo + wordmark (versione preferita)
+│   ├── cc-color-system.html          # Esplora palette interattiva con WCAG
+│   └── cc-typography.html            # Simulazione slide caroselli
+├── design-system/
+│   ├── brand.md                      # Logo, versioni, utilizzi corretti/scorretti
+│   ├── colors.md                     # Palette, scale, token CSS, regole d'uso
+│   ├── tone.md                       # Tono di voce e istruzioni per la scrittura
+│   └── typography.md                 # Font, scala, headline fondino, label, statistica
+├── docs/
+│   └── collaborazione/
+│       ├── github-amministrazione.md # Gestione organizzazione, ruoli e permessi
+│       └── github-collaboratori.md   # Flusso di lavoro con branch e pull request
+└── skills/
+    ├── cc-tono-di-voce.md            # Documentazione della skill
+    └── cc-tono-di-voce.skill         # Skill da installare in Claude
 ```
 
 ---
