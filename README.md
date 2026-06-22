@@ -4,7 +4,7 @@ Design system ufficiale di **Caratteri Cubitali APS**, associazione di promozion
 
 ---
 
-## Collaborazione
+## Come collaborare
 
 Documentazione per chi lavora o vuole lavorare al brand system.
 
